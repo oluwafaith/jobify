@@ -2,6 +2,7 @@ import express from "express"
 const app = express()
 import dotenv from 'dotenv'
 dotenv.config()
+import "express-async-errors"
 //middleware
 import notFoundMiddleware from "./not-found.js"
 import errorHandlerMiddleware from "./error-handler.js"
