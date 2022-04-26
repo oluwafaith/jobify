@@ -1,5 +1,5 @@
-import express from "express";
-const router = express.Router();
+import express from 'express'
+const router = express.Router()
 
 import {
   createJob,
@@ -7,17 +7,11 @@ import {
   getAllJobs,
   updateJob,
   showStats,
-} from "../controller/jobsController.js";
+} from '../controllers/jobsController.js'
 
-router.route("/")
-.post(createJob)
-.get(getAllJobs);
+router.route('/').post(createJob).get(getAllJobs)
 
-router.route("/stats")
-.get(showStats);
+router.route('/stats').get(showStats)
+router.route('/:id').delete(deleteJob).patch(updateJob)
 
-router.route("/:id")
-.delete(deleteJob)
-.patch(updateJob);
-
-export default router;
+export default router
