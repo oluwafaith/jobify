@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server"
+    "server": "nodemon server --ignore client",
+    "client": "npm start --prefix client",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \" npm run client\""
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,9 @@
   },
   "homepage": "https://github.com/oluwafaith/jobify#readme",
   "dependencies": {
+    "axios": "^0.27.1",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-async-errors": "^3.1.1",
@@ -28,5 +32,8 @@
     "mongoose": "^6.2.9",
     "nodemon": "^2.0.15",
     "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "concurrently": "^7.1.0"
   }
 }
