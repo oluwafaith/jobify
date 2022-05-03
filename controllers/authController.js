@@ -45,6 +45,7 @@ const login = async (req, res) => {
   user.password = undefined
   res.status(StatusCodes.OK).json({ user, token, location: user.location })
 }
+
 const updateUser = async (req, res) => {
   const { email, name, lastName, location } = req.body
   if (!email || !name || !lastName || !location) {

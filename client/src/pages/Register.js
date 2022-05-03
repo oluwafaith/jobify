@@ -1,3 +1,4 @@
+   
 import { useState, useEffect } from 'react'
 import { Logo, FormRow, Alert } from '../components'
 import Wrapper from '../assets/wrappers/RegisterPage'
@@ -11,72 +12,64 @@ const initialState = {
 }
 
 const Register = () => {
-//   const navigate = useNavigate()
+  const navigate = useNavigate()
   const [values, setValues] = useState(initialState)
-  const { isLoading, showAlert, displayAlert, registerUser  } =
+  const { user, isLoading, showAlert, displayAlert, setupUser } =
     useAppContext()
 
-//   const toggleMember = () => {
-//     setValues({ ...values, isMember: !values.isMember })
-//   }
+  const toggleMember = () => {
+    setValues({ ...values, isMember: !values.isMember })
+  }
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value })
   }
-  
-  const onSubmit = (e)=>{
+  const onSubmit = (e) => {
     e.preventDefault()
-    const { name, email, password, isMember} = values
-    if(!email || !password || (!isMember && !name)){
+    const { name, email, password, isMember } = values
+    if (!email || !password || (!isMember && !name)) {
       displayAlert()
       return
     }
     const currentUser = { name, email, password }
-    if(isMember){
-      console.log("already a member");
-    }else{
-      registerUser(currentUser)
+    if (isMember) {
+      setupUser({
+        currentUser,
+        endPoint: 'login',
+        alertText: 'Login Successful! Redirecting...',
+      })
+    } else {
+      setupUser({
+        currentUser,
+        endPoint: 'register',
+        alertText: 'User Created! Redirecting...',
+      })
     }
   }
-    // if (isMember) {
-    //   setupUser({
-    //     currentUser,
-    //     endPoint: 'login',
-    //     alertText: 'Login Successful! Redirecting...',
-    //   })
-    // } else {
-    //   setupUser({
-    //     currentUser,
-    //     endPoint: 'register',
-    //     alertText: 'User Created! Redirecting...',
-    //   })
-    // }
- // }
 
-//   useEffect(() => {
-//     if (user) {
-//       setTimeout(() => {
-//         navigate('/')
-//       }, 3000)
-//     }
-//   }, [user, navigate])
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/')
+      }, 3000)
+    }
+  }, [user, navigate])
 
   return (
     <Wrapper className='full-page'>
- <form className='form' > 
+      <form className='form' onSubmit={onSubmit}>
         <Logo />
-        {/* <h3>{values.isMember ? 'Login' : 'Register'}</h3> */}
+        <h3>{values.isMember ? 'Login' : 'Register'}</h3>
         {showAlert && <Alert />}
         {/* name input */}
-        {/* {!values.isMember && ( */}
-      
+        {!values.isMember && (
           <FormRow
             type='text'
             name='name'
             value={values.name}
             handleChange={handleChange}
           />
-        {/* )} */}
+        )}
 
         {/* email input */}
         <FormRow
@@ -86,7 +79,7 @@ const Register = () => {
           handleChange={handleChange}
         />
         {/* password input */}
-         <FormRow
+        <FormRow
           type='password'
           name='password'
           value={values.password}
@@ -97,10 +90,10 @@ const Register = () => {
         </button>
         <p>
           {values.isMember ? 'Not a member yet?' : 'Already a member?'}
-          <button type='button' className='member-btn'>
+          <button type='button' onClick={toggleMember} className='member-btn'>
             {values.isMember ? 'Register' : 'Login'}
           </button>
-        </p> 
+        </p>
       </form>
     </Wrapper>
   )

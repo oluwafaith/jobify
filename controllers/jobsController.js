@@ -70,6 +70,7 @@ const getAllJobs = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ jobs, totalJobs, numOfPages })
 }
+
 const updateJob = async (req, res) => {
   const { id: jobId } = req.params
   const { company, position } = req.body
